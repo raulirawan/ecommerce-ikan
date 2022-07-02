@@ -65,19 +65,26 @@
         //Qty Up-Down
         $('.detail-qty').each(function () {
             var qtyval = parseInt($(this).find('.qty-val').text(), 10);
+            var qtyvalID = parseInt($(this).find('#qty-val-id').val(), 10);
             $('.qty-up').on('click', function (event) {
                 event.preventDefault();
                 qtyval = qtyval + 1;
+                qtyvalID = qtyvalID + 1;
                 $(this).prev().text(qtyval);
+                $(this).prev().prev().prev().val(qtyvalID);
             });
             $('.qty-down').on('click', function (event) {
                 event.preventDefault();
                 qtyval = qtyval - 1;
+                qtyvalID = qtyvalID - 1;
                 if (qtyval > 1) {
                     $(this).next().text(qtyval);
+                    $(this).prev().val(qtyvalID);
                 } else {
                     qtyval = 1;
+                    qtyvalID = 1;
                     $(this).next().text(qtyval);
+                    $(this).prev().val(qtyvalID);
                 }
             });
         });

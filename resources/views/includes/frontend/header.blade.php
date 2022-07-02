@@ -61,6 +61,7 @@
                                             @endphp
                                         <span class="pro-count blue">{{ $carts->count() }}</span>
                                     </a>
+                                    @if ($carts->isNotEmpty())
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
                                             @foreach ($carts as $cart)
@@ -71,10 +72,10 @@
                                                 </div>
                                                 <div class="shopping-cart-title">
                                                     <h4><a href="shop-product-right.html">{{ $cart->produk->nama_produk }}</a></h4>
-                                                    <h4><span>{{ $cart->quantity }} × </span>Rp{{ number_format($cart->harga) }}</h4>
+                                                    <h4><span>{{ $cart->quantity }} × </span>Rp{{ number_format($cart->produk->harga) }}</h4>
                                                 </div>
                                                 <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                                    <a href="{{ route('cart.delete', $cart->id) }}" onclick="return confirm('Yakin ?')"><i class="fi-rs-cross-small"></i></a>
                                                 </div>
                                             </li>
                                             @endforeach
@@ -82,14 +83,18 @@
                                         </ul>
                                         <div class="shopping-cart-footer">
                                             <div class="shopping-cart-total">
-                                                <h4>Total <span>$4000.00</span></h4>
+                                                <h4>Total <span>Rp{{ number_format($carts->sum('harga')) }}</span></h4>
                                             </div>
                                             <div class="shopping-cart-button">
-                                                <a href="shop-cart.html" class="outline">View cart</a>
+                                                <a href="{{ route('cart.index') }}" class="outline">Lihat Keranjang</a>
                                                 <a href="shop-checkout.html">Checkout</a>
                                             </div>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                       <div class="text-center">Belum Ada Data</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

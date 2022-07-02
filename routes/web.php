@@ -20,6 +20,7 @@ Route::get('/clear-cache', function() {
 });
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/ikan/{slug}', 'ProdukController@detail')->name('detail.produk');
 
 // PENJUAL
 Route::middleware(['auth'])
@@ -28,6 +29,17 @@ Route::middleware(['auth'])
 
     Route::post('akun-saya/update','ProfilController@update')->name('profil.update');
     Route::post('akun-saya/ganti-password','ProfilController@updatePassword')->name('change.password');
+
+
+    Route::get('tambah/keranjang/{id}','CartController@add')->name('cart.add');
+    Route::get('hapus-cart/{id}','CartController@delete')->name('cart.delete');
+
+    Route::get('keranjang','CartController@index')->name('cart.index');
+    Route::post('update/keranjang','CartController@updateKeranjang')->name('cart.update');
+
+    Route::post('tambah/keranjang','CartController@addCart')->name('cart.add.quantity');
+
+
 
 
 

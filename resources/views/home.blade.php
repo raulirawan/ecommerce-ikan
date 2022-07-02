@@ -79,7 +79,7 @@
                         <div class="product-cart-wrap mb-30">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
-                                    <a href="shop-product-right.html">
+                                    <a href="{{ route('detail.produk', $item->slug) }}">
                                         <img class="default-img" src="{{ asset(json_decode($item->gambar)[0]) }}" alt="">
                                         <img class="hover-img" src="{{ asset(json_decode($item->gambar)[0]) }}" alt="">
                                     </a>
@@ -89,13 +89,13 @@
                             </div>
                             <div class="product-content-wrap">
 
-                                <h2><a href="shop-product-right.html">{{ $item->nama_produk }}</a></h2>
+                                <h2><a href="{{ route('detail.produk', $item->slug) }}">{{ $item->nama_produk }}</a></h2>
 
                                 <div class="product-price">
                                     <span>Rp{{ number_format($item->harga) }} / Kg</span>
                                 </div>
                                 <div class="product-action-1 show">
-                                    <a aria-label="Tambah Keranjang" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                    <a aria-label="Tambah Keranjang" class="action-btn hover-up" href="{{ route('cart.add', $item->id) }}"><i class="fi-rs-shopping-bag-add"></i></a>
                                 </div>
                             </div>
                         </div>
