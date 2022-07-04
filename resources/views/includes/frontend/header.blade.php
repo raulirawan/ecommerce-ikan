@@ -34,7 +34,7 @@
                                     </li>
                                 @endguest
                                 @auth
-                                    <li><a href="index.html">Akun Saya <i class="fi-rs-angle-down"></i></a>
+                                    <li><a href="index.html">Halo, {{ Auth::user()->name }} <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="{{ route('profil.index') }}">Profil</a></li>
                                             <li><a href="{{ route('logout') }}"
@@ -87,7 +87,7 @@
                                             </div>
                                             <div class="shopping-cart-button">
                                                 <a href="{{ route('cart.index') }}" class="outline">Lihat Keranjang</a>
-                                                <a href="shop-checkout.html">Checkout</a>
+                                                <a href="{{ route('checkout.index') }}">Checkout</a>
                                             </div>
                                         </div>
                                     </div>

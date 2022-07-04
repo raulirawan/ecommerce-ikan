@@ -78,6 +78,8 @@ class TransaksiController extends Controller
                         return '<span class="badge bg-success">SUCCESS</span>';
                     }else if($item->status == 'DELIVERED') {
                         return '<span class="badge bg-success">DELIVERED</span>';
+                    }else if($item->status == 'DITERIMA') {
+                        return '<span class="badge bg-success">DITERIMA</span>';
                     }else if($item->status == 'CANCELLED') {
                         return '<span class="badge bg-danger">CANCELLED</span>';
                     } else {
@@ -105,10 +107,25 @@ class TransaksiController extends Controller
         $transaksi->save();
 
         if($transaksi != null) {
-            Alert::success('Success','Data Berhasil di Tambah');
+            Alert::success('Success','Data Berhasil di Update');
             return redirect()->route('penjual.transaksi.detail', $id);
         }else {
-            Alert::error('Error','Data Gagal di Tambah');
+            Alert::error('Error','Data Gagal di Update');
+            return redirect()->route('penjual.transaksi.detail', $id);
+        }
+    }
+
+    public function updateTerkirim($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'DELIVERED';
+        $transaksi->save();
+
+        if($transaksi != null) {
+            Alert::success('Success','Data Berhasil di Update');
+            return redirect()->route('penjual.transaksi.detail', $id);
+        }else {
+            Alert::error('Error','Data Gagal di Update');
             return redirect()->route('penjual.transaksi.detail', $id);
         }
     }

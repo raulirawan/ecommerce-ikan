@@ -17,7 +17,6 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend') }}/assets/imgs/theme/favicon.svg">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets') }}/css/pages/sweetalert2.css">
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/main.css">
 
 

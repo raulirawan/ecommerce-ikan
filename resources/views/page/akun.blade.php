@@ -36,11 +36,11 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
+                                            onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();"><i
                                                 class="fi-rs-sign-out mr-10"></i>Logout</a>
                                     </li>
-                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </ul>
@@ -87,13 +87,21 @@
                                                                 <td>{{ $transaksi->status }}</td>
                                                                 <td>{{ number_format($transaksi->total_harga) }}</td>
                                                                 <td>
-                                                                    <a href="#"
+                                                                    <a  href="#"
+                                                                        onclick="detailTransaction({{ $transaksi->id }})"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-detail"
                                                                         class="btn-small btn btn-sm btn-info d-block mb-2">Detail</a>
-                                                                    <a href="#"
-                                                                        class="btn-small btn btn-sm btn-info d-block mb-2"
-                                                                        onclick="return confirm('Barang Sudah Di Terima ?')">Terima</a>
-                                                                    <a href="#"
-                                                                        class="btn-small btn btn-sm btn-info d-block mb-2">Bayar</a>
+                                                                    @if ($transaksi->status == 'DELIVERED')
+                                                                    <a href="{{ route('terima.barang', $transaksi->id) }}"
+                                                                    class="btn-small btn btn-sm btn-info d-block mb-2"
+                                                                    onclick="return confirm('Barang Sudah Di Terima ?')">Terima</a>
+                                                                    @endif
+                                                                    @if ($transaksi->status == 'PENDING')
+                                                                    <a href="{{ $transaksi->link_pembayaran ?? '' }}"
+                                                                    target="_blank"
+                                                                    class="btn-small btn btn-sm btn-info d-block mb-2">Bayar</a>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -146,7 +154,8 @@
                                             <h5>Ganti Password</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form method="post" action="{{ route('change.password') }}" enctype="multipart/form-data">
+                                            <form method="post" action="{{ route('change.password') }}"
+                                                enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="form-group col-md-12">
@@ -198,11 +207,69 @@
         </div>
     </section>
 
+    <div class="modal fade bd-example-modal-lg" data-target=".bd-example-modal-lg" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document" style="margin-top: 120px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Transaksi</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Gambar</th>
+                                    <th>Nama Produk</th>
+                                    <th>Quantity</th>
+                                    <th>Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-detail"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @push('down-script')
         <script>
             $(document).ready(function() {
                 $('#nav-tab a[href="#{{ old('tab') }}"]').tab('show')
             });
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            function detailTransaction(transaction_id) {
+                $('#data-detail').html('');
+                $.ajax({
+                    url: window.location.origin + "/akun-saya/transaksi/detail/" + transaction_id,
+                    method: 'get',
+                    dataType: 'json',
+                    success: function(e) {
+                        let html = '';
+                        e.forEach((val, item) => {
+                            html += `
+                                <tr>
+                                    <td>
+                                        <img src="${JSON.parse(val.produk.gambar)[0]}" style="width: 100px">
+                                    </td>
+                                    <td>${val.produk.nama_produk}</td>
+                                    <td>${val.quantity} KG</td>
+                                    <td>Rp${numberWithCommas(val.harga)}</td>
+                                </tr>
+                            `;
+                        })
+                        $('#data-detail').append(html)
+                    },
+                    error: function(e) {}
+                })
+            }
         </script>
     @endpush
 @endsection

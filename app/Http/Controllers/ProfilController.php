@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Transaksi;
+use App\TransaksiDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -56,5 +58,33 @@ class ProfilController extends Controller
 
         Alert::success('Success', 'Password Anda Berhasil di Ganti');
         return back()->withInput(['tab' => 'account-detail']);
+    }
+
+    public function transaksiDetail($id)
+    {
+        $transaksi = TransaksiDetail::with(['produk','transaksi'])->where('transaksi_id', $id)->get();
+        return response()->json($transaksi);
+    }
+
+    public function terimaBarang($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+
+        $transaksi->status = 'DITERIMA';
+
+        $penjual = User::findOrFail($transaksi->penjual_id);
+
+        $penjual->saldo = $penjual->saldo + $transaksi->total_harga;
+        $penjual->save();
+
+        $transaksi->save();
+
+        if ($transaksi != null) {
+            Alert::success('Success', 'Data Berhasil di Update');
+            return back()->withInput(['tab' => 'orders']);
+        } else {
+            Alert::error('Error', 'Data Gagal di Update');
+            return back()->withInput(['tab' => 'orders']);
+        }
     }
 }

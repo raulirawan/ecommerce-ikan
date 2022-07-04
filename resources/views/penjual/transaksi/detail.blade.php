@@ -133,6 +133,11 @@
                                                             <span
                                                                 class="badge rounded-pill alert-success text-success">{{ $transaksi->status }}</span>
                                                         </dd>
+                                                    @elseif ($transaksi->status == 'DITERIMA')
+                                                        <dd>
+                                                            <span
+                                                                class="badge rounded-pill alert-success text-success">{{ $transaksi->status }}</span>
+                                                        </dd>
                                                     @elseif ($transaksi->status == 'CANCELLED')
                                                         <dd>
                                                             <span
@@ -145,6 +150,14 @@
                                                         </dd>
                                                     @endif
                                                 </dl>
+                                               @if ($transaksi->status == 'SUCCESS')
+                                               <dl class="dlist mt-4">
+                                                <dt>Update Status:</dt>
+                                                <dd>
+                                                    <a href="{{ route('penjual.tansaksi.update.terkirim', $transaksi->id) }}" onclick="return confirm('Barang Sudah Terkirim ?')" class="btn btn-primary btn-sm badge">Delivered</a>
+                                                </dd>
+                                            </dl>
+                                               @endif
                                             </article>
                                         </td>
                                     </tr>

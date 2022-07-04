@@ -19,7 +19,7 @@ Route::get('/clear-cache', function() {
     return 'cache-clear';
 });
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/ikan/{slug}', 'ProdukController@detail')->name('detail.produk');
 
 // PENJUAL
@@ -30,6 +30,9 @@ Route::middleware(['auth'])
     Route::post('akun-saya/update','ProfilController@update')->name('profil.update');
     Route::post('akun-saya/ganti-password','ProfilController@updatePassword')->name('change.password');
 
+    Route::get('akun-saya/transaksi/detail/{id}','ProfilController@transaksiDetail')->name('profil.transaksi.detail');
+
+
 
     Route::get('tambah/keranjang/{id}','CartController@add')->name('cart.add');
     Route::get('hapus-cart/{id}','CartController@delete')->name('cart.delete');
@@ -38,6 +41,13 @@ Route::middleware(['auth'])
     Route::post('update/keranjang','CartController@updateKeranjang')->name('cart.update');
 
     Route::post('tambah/keranjang','CartController@addCart')->name('cart.add.quantity');
+
+
+    Route::get('checkout','CheckoutController@index')->name('checkout.index');
+    Route::post('checkout','CheckoutController@store')->name('checkout.store');
+
+
+    Route::get('/terima/barang/{id}', 'ProfilController@terimaBarang')->name('terima.barang');
 
 
 
@@ -101,7 +111,7 @@ Route::prefix('penjual')
     Route::get('transaksi', 'Penjual\TransaksiController@index')->name('penjual.transaksi.index');
     Route::get('transaksi/detail/{id}', 'Penjual\TransaksiController@detail')->name('penjual.transaksi.detail');
     Route::post('transaksi/update/{id}', 'Penjual\TransaksiController@update')->name('penjual.transaksi.update');
-
+    Route::get('/transaksi/udpdate/terkirim/{id}', 'Penjual\TransaksiController@updateTerkirim')->name('penjual.tansaksi.update.terkirim');
 
     // WITHDRAW
     Route::get('withdraw', 'Penjual\WithdrawController@index')->name('penjual.withdraw.index');
@@ -119,5 +129,5 @@ Route::prefix('penjual')
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/midtrans/callback', 'MidtransController@callback')->name('midtrans.callback');
 

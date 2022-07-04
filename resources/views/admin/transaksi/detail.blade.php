@@ -133,6 +133,11 @@
                                                             <span
                                                                 class="badge rounded-pill alert-success text-success">{{ $transaksi->status }}</span>
                                                         </dd>
+                                                    @elseif ($transaksi->status == 'DITERIMA')
+                                                        <dd>
+                                                            <span
+                                                                class="badge rounded-pill alert-success text-success">{{ $transaksi->status }}</span>
+                                                        </dd>
                                                     @elseif ($transaksi->status == 'CANCELLED')
                                                         <dd>
                                                             <span

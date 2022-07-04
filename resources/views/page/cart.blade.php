@@ -53,7 +53,7 @@
                         </table>
                     </div>
                     <div class="cart-action text-end">
-                        <a class="btn " href="{{ route('home') }}"><i class="fi-rs-shopping-bag mr-10"></i>Lanjut Belanja</a>
+                        <a class="btn " href="{{ route('home.index') }}"><i class="fi-rs-shopping-bag mr-10"></i>Lanjut Belanja</a>
                     </div>
 
                 </form>
@@ -83,7 +83,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="#" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+                            <a href="{{ route('checkout.index') }}" class="btn "> <i class="fi-rs-box-alt mr-10"></i>Proses Checkout</a>
                         </div>
                     </div>
                 </div>
