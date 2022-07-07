@@ -71,6 +71,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Kode Transaksi</th>
+                                                            <th>No Resi</th>
                                                             <th>Penjual</th>
                                                             <th>Tanggal</th>
                                                             <th>Status</th>
@@ -82,6 +83,7 @@
                                                         @foreach (App\Transaksi::where('user_id', Auth::user()->id)->get() as $transaksi)
                                                             <tr>
                                                                 <td>#{{ $transaksi->kode_transaksi }}</td>
+                                                                <td>{{ $transaksi->no_resi ?? 'Belum Ada' }}</td>
                                                                 <td>{{ $transaksi->penjual->name }}</td>
                                                                 <td>{{ $transaksi->created_at }}</td>
                                                                 <td>{{ $transaksi->status }}</td>

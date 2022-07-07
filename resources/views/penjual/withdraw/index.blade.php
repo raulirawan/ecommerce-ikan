@@ -75,10 +75,14 @@
                                 $bank = json_decode(App\User::where('id', Auth::user()->id)->first()->bank);
                             @endphp
                               <select name="bank" id="bank" class="form-control" required>
+                                @if (!empty($bank))
                                 <option value="">Pilih Bank</option>
                                 @foreach ($bank as $val)
                                 <option value="{{ $val->nama_bank }}-{{ $val->no_rek }}">{{ $val->nama_bank }} - {{ $val->no_rek }}</option>
                                 @endforeach
+                                @else
+                                <option value="">Silahkan Isi Data Bank Dahulu</option>
+                                @endif
                               </select>
 
                         </div>
@@ -87,10 +91,16 @@
                     </div>
 
             </div>
+            @if (!empty($bank))
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 <button type="submit" class="btn btn-primary">Simpan Data</button>
             </div>
+            @else
+            <div class="modal-footer">
+            <a  href="{{ route('penjual.bank.index') }}" class="btn btn-primary">Menu Bank</a>
+            </div>
+            @endif
             </form>
 
         </div>

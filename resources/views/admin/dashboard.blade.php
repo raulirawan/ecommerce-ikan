@@ -18,11 +18,8 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-primary-light"><i class="text-primary material-icons md-monetization_on"></i></span>
                     <div class="text">
-                        <h6 class="mb-1 card-title">Revenue</h6>
-                        <span>$13,456.5</span>
-                        <span class="text-sm">
-                            Shipping fees are not included
-                        </span>
+                        <h6 class="mb-1 card-title">Pendapatan</h6>
+                        <span>{{ number_format($pendapatan) }}</span>
                     </div>
                 </article>
             </div>
@@ -32,10 +29,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="text-success material-icons md-local_shipping"></i></span>
                     <div class="text">
-                        <h6 class="mb-1 card-title">Orders</h6> <span>53.668</span>
-                        <span class="text-sm">
-                            Excluding orders in transit
-                        </span>
+                        <h6 class="mb-1 card-title">Total Transaksi Berhasil</h6> <span>{{ $countTransaksiBerhasil }}</span>
                     </div>
                 </article>
             </div>
@@ -45,10 +39,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-warning material-icons md-qr_code"></i></span>
                     <div class="text">
-                        <h6 class="mb-1 card-title">Products</h6> <span>9.856</span>
-                        <span class="text-sm">
-                            In 19 Categories
-                        </span>
+                        <h6 class="mb-1 card-title">Produk</h6> <span>{{ $countProduk }}</span>
                     </div>
                 </article>
             </div>
@@ -58,10 +49,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-info-light"><i class="text-info material-icons md-shopping_basket"></i></span>
                     <div class="text">
-                        <h6 class="mb-1 card-title">Monthly Earning</h6> <span>$6,982</span>
-                        <span class="text-sm">
-                            Based in your local time.
-                        </span>
+                        <h6 class="mb-1 card-title">Total Penjual</h6> <span>{{ $countPenjual }}</span>
                     </div>
                 </article>
             </div>

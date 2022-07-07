@@ -21,6 +21,7 @@ Route::get('/clear-cache', function() {
 
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/ikan/{slug}', 'ProdukController@detail')->name('detail.produk');
+Route::get('/ikan', 'ProdukController@index')->name('produk.index');
 
 // PENJUAL
 Route::middleware(['auth'])

@@ -72,9 +72,17 @@ class ProfilController extends Controller
 
         $transaksi->status = 'DITERIMA';
 
+        $komisi = $transaksi->total_harga / 100 * 5;
+
+
+        $total_harga_bersih = $transaksi->total_harga - $komisi;
+        $transaksi->komisi = $komisi;
+
+        $transaksi->total_harga_bersih = $total_harga_bersih;
+
         $penjual = User::findOrFail($transaksi->penjual_id);
 
-        $penjual->saldo = $penjual->saldo + $transaksi->total_harga;
+        $penjual->saldo = $penjual->saldo + $total_harga_bersih;
         $penjual->save();
 
         $transaksi->save();

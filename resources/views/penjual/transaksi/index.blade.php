@@ -52,6 +52,8 @@
                                 <th>Penjual</th>
                                 <th>Status</th>
                                 <th>Total Harga</th>
+                                <th>Komisi</th>
+                                <th>Total Harga Bersih</th>
                                 <th style="width: 15%">Action</th>
                             </tr>
                         </thead>
@@ -62,6 +64,8 @@
                             <tr>
                                 <th colspan="5">Total</th>
                                 <th id="total"></th>
+                                <th id="total_komisi"></th>
+                                <th id="total_bersih"></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -154,6 +158,16 @@
                            render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
                        },
                        {
+                           data: 'komisi',
+                           name: 'komisi',
+                           render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                       },
+                       {
+                           data: 'total_harga_bersih',
+                           name: 'total_harga_bersih',
+                           render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                       },
+                       {
                            data: 'action',
                            name: 'action',
                            orderable: false,
@@ -173,31 +187,34 @@
                                i : 0;
                        };
 
-                       total = api
-                           .column(5)
+                      for (let i = 5; i <= 7; i++) {
+                        total = api
+                           .column(i)
                            .data()
                            .reduce(function(a, b) {
                                return intVal(a) + intVal(b);
                            }, 0);
 
-                       // Total over this page
-                       price = api
-                           .column(5, {
-                               page: 'current'
-                           })
-                           .data()
-                           .reduce(function(a, b) {
-                               return intVal(a) + intVal(b);
-                           }, 0);
+                        // Total over this page
+                        price = api
+                            .column(i, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce(function(a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
 
-                       $(api.column(5).footer()).html(
-                           'Rp' + price
-                       );
+                        $(api.column(i).footer()).html(
+                            'Rp' + price
+                        );
 
-                       var numFormat = $.fn.dataTable.render.number('\,', 'Rp').display;
-                       $(api.column(5).footer()).html(
-                           'Rp ' + numFormat(price)
-                       );
+                        var numFormat = $.fn.dataTable.render.number('\,', 'Rp').display;
+                        $(api.column(i).footer()).html(
+                            'Rp ' + numFormat(price)
+                        );
+
+                      }
                    }
 
                });

@@ -22,7 +22,7 @@
 
                                 </li>
                                 <li>
-                                    <a href="#">Ikan</a>
+                                    <a href="{{ route('produk.index') }}">Ikan</a>
                                 </li>
 
                                 @guest

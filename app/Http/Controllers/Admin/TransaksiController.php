@@ -62,8 +62,19 @@ class TransaksiController extends Controller
                         >Detail</a>
                         ';
                 })
-                ->editColumn('harga', function($item) {
-                    return number_format($item->total_harga);
+                ->editColumn('komisi', function($item) {
+                    if($item->komisi != null){
+                        return $item->komisi;
+                    } else {
+                        return 0;
+                    }
+                })
+                ->editColumn('total_harga_bersih', function($item) {
+                    if($item->total_harga_bersih != null){
+                        return $item->total_harga_bersih;
+                    } else {
+                        return 0;
+                    }
                 })
                 ->editColumn('status', function($item) {
                     if($item->status == 'PENDING') {
